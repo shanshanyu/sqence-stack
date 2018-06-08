@@ -15,7 +15,7 @@ status destroystack(sqstack *s) { //destroy  stack
 	return OK;
 }
 
-status gettop(sqstack s, selemtype *e) {//取得栈顶元素
+status gettop(sqstack s, selemtype *e) {//鍙栧緱鏍堥《鍏冪礌
 	if (s.base == s.top) return ERROR;
 	*e = *(s.top - 1);
 	return OK;
@@ -26,7 +26,7 @@ status push(sqstack *s, selemtype e) {
 		s->base = realloc(s->base, sizeof(selemtype)*(s->stacksize + INCREMENT));
 		if (!s->base) return ERROR;
 		s->stacksize += INCREMENT;
-		s->top = s->base + s->stacksize; //realloc可能重新分配内存
+		s->top = s->base + s->stacksize; //realloc鍙兘閲嶆柊鍒嗛厤鍐呭瓨
 	}
 	*s->top++ = e;
 	return OK;
@@ -40,5 +40,15 @@ status pop(sqstack *s, selemtype *e) {
 
 status stacktraverse(sqstack s) {
 	while (s.base!=s.top) printf("%d", *--s.top);
+	return OK;
+}
+
+void print(selemtype e) {
+	printf("%d", e);
+}
+
+status stacktraverse1(sqstack s, void(*vi)(selemtype)) {//from top to base
+	while (s.top > s.base)
+		vi(*--s.top);
 	return OK;
 }
